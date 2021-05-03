@@ -1,0 +1,27 @@
+name: push
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # If self-linting fails on any version, it uses version-specific apis and doesn't polyfill
+        luaVersion: ["5.1", "5.2", "5.3", "5.4", "luajit"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: leafo/gh-actions-lua@v8.0.0
+        with:
+          luaVersion: ${{ matrix.luaVersion }}
+      - uses: leafo/gh-actions-luarocks@v4.0.0
+
+      - name: Build
+        run: |
+          luarocks install cyan
+          cyan build
+          luarocks make
+
+      - name: Lint
+        run: |
+          shiroko check-all

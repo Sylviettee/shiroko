@@ -1,0 +1,49 @@
+      <svg viewBox="0 0 190 70" xmlns="http://www.w3.org/2000/svg">
+         <style>
+            /* https://github.com/aaron-williamson/base16-alacritty/blob/master/colors/base16-tomorrow-night-256.yml */
+            pre {
+               background: #222436;
+               margin: 0;
+               padding: 5px;
+               border-radius: 6px;
+               color: #c8d3f5;
+               font: 4px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+            }
+
+            pre .black   { color: #191a2a; }
+            pre .red     { color: #ff5370; }
+            pre .green   { color: #a5c477; }
+            pre .yellow  { color: #ddac68; }
+            pre .blue    { color: #375aba; }
+            pre .magenta { color: #e295d2; }
+            pre .cyan    { color: #86e1fc; }
+            pre .white   { color: #c8d3f5; }
+
+            pre .brightBlack    { color: #222436; }
+            pre .brightRed      { color: #ff757f; }
+            pre .brightGreen    { color: #c3e88d; }
+            pre .brightYellow   { color: #ffc777; }
+            pre .brightBlue     { color: #82aaff; }
+            pre .brightMagenta  { color: #fca7ea; }
+            pre .brightCyan     { color: #9fe6fc; }
+            pre .brightWhite    { color: #c8d3f5; }
+         </style>
+         <foreignObject x="0" y="0" width="190" height="70">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+               <pre><span class="yellow">[emptyBlock] Empty if block</span> - ../tl/tl.tl:643:13
+<span class="yellow">[emptyBlock] Empty if block</span> - ../tl/tl.tl:671:13
+<span class="yellow">[ifSameThenElse] If branch same as previous if</span> - ../tl/tl.tl:838:16
+<span class="yellow">[ifSameThenElse] If branch same as previous if</span> - ../tl/tl.tl:1786:7
+<span class="yellow">[emptyBlock] Empty function block</span> - ../tl/tl.tl:3449:26
+<span class="green">┌─ </span>../tl/tl.tl:3449:26
+<span class="green">│ </span>decrement_indent <span class="cyan">=</span> <span class="red">function</span><span class="red">(</span><span class="red">)</span> <span class="red">end</span>
+<span class="green">= </span>Delete this code
+<span class="yellow">[ifSameThenElse] If branch same as previous if</span> - ../tl/tl.tl:6576:10
+<span class="yellow">[emptyBlock] Empty if block</span> - ../tl/tl.tl:6832:7
+<span class="yellow">[ifSameThenElse] If branch same as previous if</span> - ../tl/tl.tl:8497:19
+<span class="yellow">[ifSameThenElse] If branch same as previous if</span> - ../tl/tl.tl:8499:19
+</pre>
+            </div>
+         </foreignObject>
+      </svg>
+   

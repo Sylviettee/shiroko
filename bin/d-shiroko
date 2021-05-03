@@ -1,0 +1,11 @@
+#!/usr/bin/env lua
+
+package.path = './out/?/init.lua;./out/?.lua;' .. package.path
+
+local succ, logger = pcall(require, 'tealdoc.logger')
+
+if succ then
+   logger.level = 5
+end
+
+require 'shiroko.cli'()
