@@ -36,8 +36,8 @@ local function convertError(file: string, errs: {tl.Error}, ret: {common.Report}
          file = err.filename or file,
          column = err.x,
          line = err.y,
-         columnStop = err.xend or err.x, -- shiroko: allow(tlCheck)
-         lineStop = err.yend or err.y, -- shiroko: allow(tlCheck)
+         columnStop = (err as {string: integer}).xend or err.x,
+         lineStop = (err as {string: integer}).yend or err.y,
          message = err.msg,
          severity = err.tag == 'hint' and 'hint' or (level as common.Severity) or 'error',
          code = err.tag or 'tlCheck'

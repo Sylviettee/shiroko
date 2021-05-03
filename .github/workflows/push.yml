@@ -18,7 +18,11 @@ jobs:
 
       - name: Build
         run: |
-          luarocks install cyan
+          luarocks install --server=https://luarocks.org/dev --deps-mode none cyan
+          luarocks install luafilesystem
+          luarocks install argparse
+          luarocks install tl
+
           cyan build
           luarocks make
 

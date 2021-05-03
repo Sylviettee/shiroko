@@ -8,7 +8,8 @@ dependencies = {
    'argparse',
    'luafilesystem',
    'tl',
-   'dkjson'
+   'dkjson',
+   'luaposix'
 }
 build = {
    type = 'builtin',
