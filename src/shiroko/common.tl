@@ -116,10 +116,6 @@ local record Type
    -- unresolved items
    labels: {string:{Node}}
    nominals: {string:{Type}}
-
-   -- Sneak around the teal compiler like always
-   -- Although can't really know what is or isn't a typeid so lets be safe
-   uid: string
 end
 
 local enum NodeKind
