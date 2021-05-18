@@ -48,6 +48,16 @@ function fs.write(path: string, data: string)
    f:close()
 end
 
+function fs.exists(path: string): string, string
+   local exists = lfs.attributes(path)
+
+   if exists then
+      return path
+   else
+      return nil, path .. ': No such file or directory'
+   end
+end
+
 function fs.dirTree(dir: string, current: {string: string}, depth: string): {string: string}
    local tree = current or {}
 
@@ -65,14 +75,16 @@ function fs.dirTree(dir: string, current: {string: string}, depth: string): {str
       dir = dir:sub(0, pLen - 1)
    end
 
-   for path in lfs.dir(dir) do
-      if path ~= '.' and path ~= '..' then
-         local attributes = lfs.attributes(dir .. '/' .. path)
+   if fs.exists(dir) then
+      for path in lfs.dir(dir) do
+         if path ~= '.' and path ~= '..' then
+            local attributes = lfs.attributes(dir .. '/' .. path)
 
-         if attributes.mode == 'file' and (path:match('%.lua$') or path:match('%.tl$')) then
-            tree[depth .. path:match('(.-)%.(.*)')] = dir .. '/' .. path
-         elseif attributes.mode == 'directory' then
-            fs.dirTree(dir .. '/' .. path, tree, depth)
+            if attributes.mode == 'file' and (path:match('%.lua$') or path:match('%.tl$')) then
+               tree[depth .. path:match('(.-)%.(.*)')] = dir .. '/' .. path
+            elseif attributes.mode == 'directory' then
+               fs.dirTree(dir .. '/' .. path, tree, depth)
+            end
          end
       end
    end
@@ -112,16 +124,6 @@ function fs.searchAll(path: string, pat: string, current: {string}): {string}
    end
 
    return current
-end
-
-function fs.exists(path: string): string, string
-   local exists = lfs.attributes(path)
-
-   if exists then
-      return path
-   else
-      return nil, path .. ': No such file or directory'
-   end
 end
 
 function fs.mkdir(path: string)
