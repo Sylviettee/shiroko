@@ -25,7 +25,7 @@ local function checkAdjacentOverloads(node: common.Node): {common.Report}
       local name = def.field_order[i]
       local field = def.fields[name]
 
-      if field.types then
+      if field.types and field.types[1].y and field.types[#field.types].y then
          for y = field.types[1].y, field.types[#field.types].y do
             if byOrder[y] then
                table.insert(rets, _reportCheckAdjacentOverloads(field.x, y))
