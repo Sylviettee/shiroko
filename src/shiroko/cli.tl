@@ -24,7 +24,7 @@ parser:command('check')
       :convert(fs.exists)
       :args('+')
 
-parser:flag('-q --quiet', 'Disable all unneeded output (ie quick fix). This is the same as `--display-style=quiet`')
+parser:flag('-q --quiet', 'Disable all unneeded output. This is the same as `--display-style=quiet`')
 
 parser:flag('-v --version', 'The version of shiroko')
 
@@ -36,7 +36,7 @@ parser:option('--display-style', 'The output display style')
    :default('full')
 
 parser:option('--rules', 'The location of the rules file')
-   :default 'shiroko.lua'
+   :default('shiroko.lua')
 
 -- The options we actually need
 local record TlConfig
@@ -66,7 +66,7 @@ local function turbo(on: boolean) -- Taken from `tl` cli tool
 
    if on then
       if jit then
-         jit.off(); -- :stare:
+         jit.off();
 
          (tl as {string: function}).lex = function(input: string): any...
             jit.on()
@@ -76,14 +76,14 @@ local function turbo(on: boolean) -- Taken from `tl` cli tool
          end
       end
 
-      collectgarbage 'stop'
+      collectgarbage('stop')
    else
       if jit then
          jit.on()
          tl.lex = tlLex
       end
 
-      collectgarbage 'restart'
+      collectgarbage('restart')
    end
 end
 
@@ -152,10 +152,12 @@ local function check(config: TlConfig, included: {string}, formatter: Formatter)
       end
    end
 
-   if type(formatter) == 'string' then
+   if formatter == 'json' as Formatter then
       io.write(json.encode(cleaned))
    else
-      io.write(formatter(cleaned) .. '\n')
+      local res = formatter(cleaned)
+
+      io.write(res .. (#res > 0 and '\n' or ''))
    end
 
    os.exit(fail and -1 or 0)

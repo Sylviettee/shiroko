@@ -6,6 +6,8 @@ return {
    indentation = 'space',
    indentationSize = 3,
    checkRecordCase = false, -- lets blame Teal
+   allowRequireDrop = true,
+   allowTableDrop = true,
    rulesets = {
       'recommended',
       'luarocks-modified'

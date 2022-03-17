@@ -2,10 +2,18 @@
 
 package.path = './out/?/init.lua;./out/?.lua;' .. package.path
 
-local succ, logger = pcall(require, 'tealdoc.logger')
+local inspect = require 'inspect'
 
-if succ then
-   logger.level = 5
+function _G.p(...)
+   for i = 1, select('#', ...) do
+      if i ~= 1 then
+         io.write('\t')
+      end
+
+      io.write(inspect(select(i, ...) or nil))
+   end
+
+   io.write('\n')
 end
 
 require 'shiroko.cli'()
