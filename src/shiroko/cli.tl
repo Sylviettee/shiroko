@@ -101,8 +101,6 @@ local function setupEnv(config: TlConfig): tl.Env
    return env
 end
 
-global p: function
-
 local function check(config: TlConfig, included: {string}, formatter: Formatter)
    local modules: {string: string} = {}
 
