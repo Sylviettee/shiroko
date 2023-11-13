@@ -6,6 +6,25 @@ Shiroko is an opinionated linter for Teal.
 
 ## Priorities
 
-* Easy to configure and modify (I have a grudge against Selene)
-* Opinionated (I have a grudge against double quotes and snake_case in Lua)
-* Speed (Read point 1)
+* Easy to configure and modify
+* Opinionated
+* Speed
+
+## Building
+
+```
+$ tl build
+or
+$ cyan build
+```
+
+## Installing
+
+```
+$ luarocks install shiroko-dev-1.rockspec
+```
+
+## Commands
+
+* `check`: check the single file passed as the argument
+* `check-all`: check an entire project with a `tlconfig.lua` file

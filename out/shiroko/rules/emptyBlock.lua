@@ -1,40 +1,40 @@
-local common = require 'shiroko.common'
-local util = require 'shiroko.util'
+local common = require('shiroko.common')
+local util = require('shiroko.util')
 
-local map: {string: string} = {
+local map = {
    global_function = 'function',
    local_function = 'function',
    if_block = 'if',
    fornum = 'for',
-   forin = 'for'
+   forin = 'for',
 }
 
-local function checkBlock(node: common.Node): common.Report
+local function checkBlock(node)
    if #node.body == 0 then
       local kind = node.kind
 
-      local column, line, columnStop, lineStop =
-         node.x,
-         node.y,
-         node.xend or node.body.x,
-         node.yend or node.body.y
+      local column, line, columnStop, lineStop = 
+      node.x,
+      node.y,
+      node.xend or node.body.x,
+      node.yend or node.body.y
 
       if node.kind == 'if_block' then
          lineStop = node.yend
       end
 
-      local fixes: {common.Fix}
+      local fixes
 
-      if node.kind ~= 'if_block' then -- The `else`
-         -- TODO; support removing the `else` in front of `if` and that sort
+      if node.kind ~= 'if_block' then
+
          fixes = {
             {
                column = column,
                line = line,
                columnStop = columnStop,
                lineStop = lineStop,
-               code = '' -- Just yeet it
-            }
+               code = '',
+            },
          }
       end
 
@@ -46,12 +46,12 @@ local function checkBlock(node: common.Node): common.Report
          line = line,
          columnStop = columnStop,
          lineStop = lineStop,
-         fixes = fixes
+         fixes = fixes,
       }
    end
 end
 
-return util.rule {
+return util.rule({
    ruleset = 'recommended',
    visitorStrategy = {
       ['do'] = checkBlock,
@@ -62,6 +62,6 @@ return util.rule {
       local_function = checkBlock,
       global_function = checkBlock,
       fornum = checkBlock,
-      forin = checkBlock
-   }
-}
+      forin = checkBlock,
+   },
+})

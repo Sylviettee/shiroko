@@ -344,258 +344,48 @@ local type etc = {tl.Env, string}
 
 -- scripts/genVisitorStrategy.tl
 local record VisitorStrategy
-   ['op']: function(Node, Node, etc): Report
-   ['op']: function(Node, Node): Report
-   ['op']: function(Node): Report
-   ['op']: function(Node, Node, etc): {Report}
-   ['op']: function(Node, Node): {Report}
-   ['op']: function(Node): {Report}
-   ['nil']: function(Node, Node, etc): Report
-   ['nil']: function(Node, Node): Report
-   ['nil']: function(Node): Report
-   ['nil']: function(Node, Node, etc): {Report}
-   ['nil']: function(Node, Node): {Report}
-   ['nil']: function(Node): {Report}
-   ['string']: function(Node, Node, etc): Report
-   ['string']: function(Node, Node): Report
-   ['string']: function(Node): Report
-   ['string']: function(Node, Node, etc): {Report}
-   ['string']: function(Node, Node): {Report}
-   ['string']: function(Node): {Report}
-   ['number']: function(Node, Node, etc): Report
-   ['number']: function(Node, Node): Report
-   ['number']: function(Node): Report
-   ['number']: function(Node, Node, etc): {Report}
-   ['number']: function(Node, Node): {Report}
-   ['number']: function(Node): {Report}
-   ['integer']: function(Node, Node, etc): Report
-   ['integer']: function(Node, Node): Report
-   ['integer']: function(Node): Report
-   ['integer']: function(Node, Node, etc): {Report}
-   ['integer']: function(Node, Node): {Report}
-   ['integer']: function(Node): {Report}
-   ['boolean']: function(Node, Node, etc): Report
-   ['boolean']: function(Node, Node): Report
-   ['boolean']: function(Node): Report
-   ['boolean']: function(Node, Node, etc): {Report}
-   ['boolean']: function(Node, Node): {Report}
-   ['boolean']: function(Node): {Report}
-   ['table_literal']: function(Node, Node, etc): Report
-   ['table_literal']: function(Node, Node): Report
-   ['table_literal']: function(Node): Report
-   ['table_literal']: function(Node, Node, etc): {Report}
-   ['table_literal']: function(Node, Node): {Report}
-   ['table_literal']: function(Node): {Report}
-   ['table_item']: function(Node, Node, etc): Report
-   ['table_item']: function(Node, Node): Report
-   ['table_item']: function(Node): Report
-   ['table_item']: function(Node, Node, etc): {Report}
-   ['table_item']: function(Node, Node): {Report}
-   ['table_item']: function(Node): {Report}
-   ['function']: function(Node, Node, etc): Report
-   ['function']: function(Node, Node): Report
-   ['function']: function(Node): Report
-   ['function']: function(Node, Node, etc): {Report}
-   ['function']: function(Node, Node): {Report}
-   ['function']: function(Node): {Report}
-   ['expression_list']: function(Node, Node, etc): Report
-   ['expression_list']: function(Node, Node): Report
-   ['expression_list']: function(Node): Report
-   ['expression_list']: function(Node, Node, etc): {Report}
-   ['expression_list']: function(Node, Node): {Report}
-   ['expression_list']: function(Node): {Report}
-   ['enum_item']: function(Node, Node, etc): Report
-   ['enum_item']: function(Node, Node): Report
-   ['enum_item']: function(Node): Report
-   ['enum_item']: function(Node, Node, etc): {Report}
-   ['enum_item']: function(Node, Node): {Report}
-   ['enum_item']: function(Node): {Report}
-   ['if']: function(Node, Node, etc): Report
-   ['if']: function(Node, Node): Report
-   ['if']: function(Node): Report
-   ['if']: function(Node, Node, etc): {Report}
-   ['if']: function(Node, Node): {Report}
-   ['if']: function(Node): {Report}
-   ['if_block']: function(Node, Node, etc): Report
-   ['if_block']: function(Node, Node): Report
-   ['if_block']: function(Node): Report
-   ['if_block']: function(Node, Node, etc): {Report}
-   ['if_block']: function(Node, Node): {Report}
-   ['if_block']: function(Node): {Report}
-   ['while']: function(Node, Node, etc): Report
-   ['while']: function(Node, Node): Report
-   ['while']: function(Node): Report
-   ['while']: function(Node, Node, etc): {Report}
-   ['while']: function(Node, Node): {Report}
-   ['while']: function(Node): {Report}
-   ['fornum']: function(Node, Node, etc): Report
-   ['fornum']: function(Node, Node): Report
-   ['fornum']: function(Node): Report
-   ['fornum']: function(Node, Node, etc): {Report}
-   ['fornum']: function(Node, Node): {Report}
-   ['fornum']: function(Node): {Report}
-   ['forin']: function(Node, Node, etc): Report
-   ['forin']: function(Node, Node): Report
-   ['forin']: function(Node): Report
-   ['forin']: function(Node, Node, etc): {Report}
-   ['forin']: function(Node, Node): {Report}
-   ['forin']: function(Node): {Report}
-   ['goto']: function(Node, Node, etc): Report
-   ['goto']: function(Node, Node): Report
-   ['goto']: function(Node): Report
-   ['goto']: function(Node, Node, etc): {Report}
-   ['goto']: function(Node, Node): {Report}
-   ['goto']: function(Node): {Report}
-   ['label']: function(Node, Node, etc): Report
-   ['label']: function(Node, Node): Report
-   ['label']: function(Node): Report
-   ['label']: function(Node, Node, etc): {Report}
-   ['label']: function(Node, Node): {Report}
-   ['label']: function(Node): {Report}
-   ['repeat']: function(Node, Node, etc): Report
-   ['repeat']: function(Node, Node): Report
-   ['repeat']: function(Node): Report
-   ['repeat']: function(Node, Node, etc): {Report}
-   ['repeat']: function(Node, Node): {Report}
-   ['repeat']: function(Node): {Report}
-   ['do']: function(Node, Node, etc): Report
-   ['do']: function(Node, Node): Report
-   ['do']: function(Node): Report
-   ['do']: function(Node, Node, etc): {Report}
-   ['do']: function(Node, Node): {Report}
-   ['do']: function(Node): {Report}
-   ['break']: function(Node, Node, etc): Report
-   ['break']: function(Node, Node): Report
-   ['break']: function(Node): Report
-   ['break']: function(Node, Node, etc): {Report}
-   ['break']: function(Node, Node): {Report}
-   ['break']: function(Node): {Report}
-   ['return']: function(Node, Node, etc): Report
-   ['return']: function(Node, Node): Report
-   ['return']: function(Node): Report
-   ['return']: function(Node, Node, etc): {Report}
-   ['return']: function(Node, Node): {Report}
-   ['return']: function(Node): {Report}
-   ['newtype']: function(Node, Node, etc): Report
-   ['newtype']: function(Node, Node): Report
-   ['newtype']: function(Node): Report
-   ['newtype']: function(Node, Node, etc): {Report}
-   ['newtype']: function(Node, Node): {Report}
-   ['newtype']: function(Node): {Report}
-   ['argument']: function(Node, Node, etc): Report
-   ['argument']: function(Node, Node): Report
-   ['argument']: function(Node): Report
-   ['argument']: function(Node, Node, etc): {Report}
-   ['argument']: function(Node, Node): {Report}
-   ['argument']: function(Node): {Report}
-   ['type_identifier']: function(Node, Node, etc): Report
-   ['type_identifier']: function(Node, Node): Report
-   ['type_identifier']: function(Node): Report
-   ['type_identifier']: function(Node, Node, etc): {Report}
-   ['type_identifier']: function(Node, Node): {Report}
-   ['type_identifier']: function(Node): {Report}
-   ['variable']: function(Node, Node, etc): Report
-   ['variable']: function(Node, Node): Report
-   ['variable']: function(Node): Report
-   ['variable']: function(Node, Node, etc): {Report}
-   ['variable']: function(Node, Node): {Report}
-   ['variable']: function(Node): {Report}
-   ['variable_list']: function(Node, Node, etc): Report
-   ['variable_list']: function(Node, Node): Report
-   ['variable_list']: function(Node): Report
-   ['variable_list']: function(Node, Node, etc): {Report}
-   ['variable_list']: function(Node, Node): {Report}
-   ['variable_list']: function(Node): {Report}
-   ['statements']: function(Node, Node, etc): Report
-   ['statements']: function(Node, Node): Report
-   ['statements']: function(Node): Report
-   ['statements']: function(Node, Node, etc): {Report}
-   ['statements']: function(Node, Node): {Report}
-   ['statements']: function(Node): {Report}
-   ['assignment']: function(Node, Node, etc): Report
-   ['assignment']: function(Node, Node): Report
-   ['assignment']: function(Node): Report
-   ['assignment']: function(Node, Node, etc): {Report}
-   ['assignment']: function(Node, Node): {Report}
-   ['assignment']: function(Node): {Report}
-   ['argument_list']: function(Node, Node, etc): Report
-   ['argument_list']: function(Node, Node): Report
-   ['argument_list']: function(Node): Report
-   ['argument_list']: function(Node, Node, etc): {Report}
-   ['argument_list']: function(Node, Node): {Report}
-   ['argument_list']: function(Node): {Report}
-   ['local_function']: function(Node, Node, etc): Report
-   ['local_function']: function(Node, Node): Report
-   ['local_function']: function(Node): Report
-   ['local_function']: function(Node, Node, etc): {Report}
-   ['local_function']: function(Node, Node): {Report}
-   ['local_function']: function(Node): {Report}
-   ['global_function']: function(Node, Node, etc): Report
-   ['global_function']: function(Node, Node): Report
-   ['global_function']: function(Node): Report
-   ['global_function']: function(Node, Node, etc): {Report}
-   ['global_function']: function(Node, Node): {Report}
-   ['global_function']: function(Node): {Report}
-   ['local_type']: function(Node, Node, etc): Report
-   ['local_type']: function(Node, Node): Report
-   ['local_type']: function(Node): Report
-   ['local_type']: function(Node, Node, etc): {Report}
-   ['local_type']: function(Node, Node): {Report}
-   ['local_type']: function(Node): {Report}
-   ['global_type']: function(Node, Node, etc): Report
-   ['global_type']: function(Node, Node): Report
-   ['global_type']: function(Node): Report
-   ['global_type']: function(Node, Node, etc): {Report}
-   ['global_type']: function(Node, Node): {Report}
-   ['global_type']: function(Node): {Report}
-   ['record_function']: function(Node, Node, etc): Report
-   ['record_function']: function(Node, Node): Report
-   ['record_function']: function(Node): Report
-   ['record_function']: function(Node, Node, etc): {Report}
-   ['record_function']: function(Node, Node): {Report}
-   ['record_function']: function(Node): {Report}
-   ['local_declaration']: function(Node, Node, etc): Report
-   ['local_declaration']: function(Node, Node): Report
-   ['local_declaration']: function(Node): Report
-   ['local_declaration']: function(Node, Node, etc): {Report}
-   ['local_declaration']: function(Node, Node): {Report}
-   ['local_declaration']: function(Node): {Report}
-   ['global_declaration']: function(Node, Node, etc): Report
-   ['global_declaration']: function(Node, Node): Report
-   ['global_declaration']: function(Node): Report
-   ['global_declaration']: function(Node, Node, etc): {Report}
-   ['global_declaration']: function(Node, Node): {Report}
-   ['global_declaration']: function(Node): {Report}
-   ['identifier']: function(Node, Node, etc): Report
-   ['identifier']: function(Node, Node): Report
-   ['identifier']: function(Node): Report
-   ['identifier']: function(Node, Node, etc): {Report}
-   ['identifier']: function(Node, Node): {Report}
-   ['identifier']: function(Node): {Report}
-   ['cast']: function(Node, Node, etc): Report
-   ['cast']: function(Node, Node): Report
-   ['cast']: function(Node): Report
-   ['cast']: function(Node, Node, etc): {Report}
-   ['cast']: function(Node, Node): {Report}
-   ['cast']: function(Node): {Report}
-   ['...']: function(Node, Node, etc): Report
-   ['...']: function(Node, Node): Report
-   ['...']: function(Node): Report
-   ['...']: function(Node, Node, etc): {Report}
-   ['...']: function(Node, Node): {Report}
-   ['...']: function(Node): {Report}
-   ['paren']: function(Node, Node, etc): Report
-   ['paren']: function(Node, Node): Report
-   ['paren']: function(Node): Report
-   ['paren']: function(Node, Node, etc): {Report}
-   ['paren']: function(Node, Node): {Report}
-   ['paren']: function(Node): {Report}
-   ['error_node']: function(Node, Node, etc): Report
-   ['error_node']: function(Node, Node): Report
-   ['error_node']: function(Node): Report
-   ['error_node']: function(Node, Node, etc): {Report}
-   ['error_node']: function(Node, Node): {Report}
-   ['error_node']: function(Node): {Report}
+   ['op']: function(Node, Node, etc): any
+   ['nil']: function(Node, Node, etc): any
+   ['string']: function(Node, Node, etc): any
+   ['number']: function(Node, Node, etc): any
+   ['integer']: function(Node, Node, etc): any
+   ['boolean']: function(Node, Node, etc): any
+   ['table_literal']: function(Node, Node, etc): any
+   ['table_item']: function(Node, Node, etc): any
+   ['function']: function(Node, Node, etc): any
+   ['expression_list']: function(Node, Node, etc): any
+   ['enum_item']: function(Node, Node, etc): any
+   ['if']: function(Node, Node, etc): any
+   ['if_block']: function(Node, Node, etc): any
+   ['while']: function(Node, Node, etc): any
+   ['fornum']: function(Node, Node, etc): any
+   ['forin']: function(Node, Node, etc): any
+   ['goto']: function(Node, Node, etc): any
+   ['label']: function(Node, Node, etc): any
+   ['repeat']: function(Node, Node, etc): any
+   ['do']: function(Node, Node, etc): any
+   ['break']: function(Node, Node, etc): any
+   ['return']: function(Node, Node, etc): any
+   ['newtype']: function(Node, Node, etc): any
+   ['argument']: function(Node, Node, etc): any
+   ['type_identifier']: function(Node, Node, etc): any
+   ['variable']: function(Node, Node, etc): any
+   ['variable_list']: function(Node, Node, etc): any
+   ['statements']: function(Node, Node, etc): any
+   ['assignment']: function(Node, Node, etc): any
+   ['argument_list']: function(Node, Node, etc): any
+   ['local_function']: function(Node, Node, etc): any
+   ['global_function']: function(Node, Node, etc): any
+   ['local_type']: function(Node, Node, etc): any
+   ['global_type']: function(Node, Node, etc): any
+   ['record_function']: function(Node, Node, etc): any
+   ['local_declaration']: function(Node, Node, etc): any
+   ['global_declaration']: function(Node, Node, etc): any
+   ['identifier']: function(Node, Node, etc): any
+   ['cast']: function(Node, Node, etc): any
+   ['...']: function(Node, Node, etc): any
+   ['paren']: function(Node, Node, etc): any
+   ['error_node']: function(Node, Node, etc): any
 end
 
 local record Rule

@@ -49,25 +49,13 @@ local record VisitorStrategy
 end
 ]]
 
-local overloads = {
-   'function(Node, Node, etc): Report',
-   'function(Node, Node): Report',
-   'function(Node): Report',
-   'function(Node, Node, etc): {Report}',
-   'function(Node, Node): {Report}',
-   'function(Node): {Report}'
-}
-
 local list = {}
 
 for i = 1, #kinds do
    local kind = kinds[i]
 
-   for k = 1, #overloads do
-      local overload = overloads[k]
-
-      table.insert(list, '   [\'' .. kind .. '\']: ' .. overload)
-   end
+   -- no support for Report | {Report} yet
+   table.insert(list, '   [\'' .. kind .. '\']: function(Node, Node, etc): any' )
 end
 
 print(string.format(base, table.concat(list, '\n')))

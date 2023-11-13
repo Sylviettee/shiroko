@@ -1,73 +1,73 @@
--- The only const that will be used
-local SHIROKO_VERSION <const> = 'dev' -- shiroko: allow(caseStyle)
+local _tl_compat; if (tonumber((_VERSION or ''):match('[%d.]*$')) or 0) < 5.3 then local p, m = pcall(require, 'compat53.module'); if p then _tl_compat = m end end; local io = _tl_compat and _tl_compat.io or io; local os = _tl_compat and _tl_compat.os or os; local pairs = _tl_compat and _tl_compat.pairs or pairs; local string = _tl_compat and _tl_compat.string or string; local table = _tl_compat and _tl_compat.table or table
+local SHIROKO_VERSION = 'dev'
 
-local formatters = require 'shiroko.formatters'
-local options = require 'shiroko.options'
-local common = require 'shiroko.common'
-local stage = require 'shiroko.stage'
-local color = require 'shiroko.color'
-local util = require 'shiroko.util'
-local fs = require 'shiroko.fs'
+local formatters = require('shiroko.formatters')
+local options = require('shiroko.options')
+local common = require('shiroko.common')
+local stage = require('shiroko.stage')
+local color = require('shiroko.color')
+local util = require('shiroko.util')
+local fs = require('shiroko.fs')
 
-local glob = require 'posix.glob'.glob
-local json = require 'dkjson'
-local tl = require 'tl'
+local glob = require('posix.glob').glob
+local json = require('dkjson')
+local tl = require('tl')
 
 local parser = require('argparse')('shiroko', 'The experimental Teal linter')
 
 parser:command_target('command')
 parser:command('check-all')
 
-parser:command('check')
-   :argument('file')
-      :convert(fs.exists)
-      :args('+')
+parser:command('check'):
+argument('file'):
+convert(fs.exists):
+args('+')
 
 parser:flag('-q --quiet', 'Disable all unneeded output. This is the same as `--display-style=quiet`')
 
 parser:flag('-v --version', 'The version of shiroko')
 
-parser:option('--color', 'If color should be enabled or not')
-   :choices({'enabled', 'disabled'})
+parser:option('--color', 'If color should be enabled or not'):
+choices({ 'enabled', 'disabled' })
 
-parser:option('--display-style', 'The output display style')
-   :choices({'quiet', 'full', 'json'})
-   :default('full')
+parser:option('--display-style', 'The output display style'):
+choices({ 'quiet', 'full', 'json' }):
+default('full')
 
-parser:option('--rules', 'The location of the rules file')
-   :default('shiroko.lua')
+parser:option('--rules', 'The location of the rules file'):
+default('shiroko.lua')
 
--- The options we actually need
-local record TlConfig
-   exclude: {string}
-   gen_compat: tl.CompatMode
-   gen_target: tl.TargetMode
-   include_dir: {string}
-   include: {string}
-   source_dir: string
-   files: {string}
-   global_env_def: string
 
-   _init_env_modules: {string}
-end
 
-local type Formatter = function({common.Report}): string
 
-local function panic(msg: string)
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function panic(msg)
    io.stderr:write(msg .. '\n')
    os.exit(-1)
 end
 
 local tlLex = tl.lex
 
-local function turbo(on: boolean) -- Taken from `tl` cli tool
-   global jit: {string: function}
+local function turbo(on)
+
 
    if on then
       if jit then
          jit.off();
 
-         (tl as {string: function}).lex = function(input: string): any...
+         (tl).lex = function(input)
             jit.on()
             local r1, r2 = tlLex(input)
             jit.off()
@@ -86,14 +86,14 @@ local function turbo(on: boolean) -- Taken from `tl` cli tool
    end
 end
 
-local function setupEnv(config: TlConfig): tl.Env
+local function setupEnv(config)
    config._init_env_modules = config._init_env_modules or {}
 
    if config.global_env_def then
       table.insert(config._init_env_modules, 1, config.global_env_def)
    end
 
-   local env, err = tl.init_env(false, false, '5.3', config._init_env_modules) as (tl.Env, string)
+   local env, err = tl.init_env(false, false, '5.3', config._init_env_modules)
 
    if not env then
       panic(err)
@@ -102,11 +102,11 @@ local function setupEnv(config: TlConfig): tl.Env
    return env
 end
 
-local function check(config: TlConfig, included: {string}, formatter: Formatter)
-   local modules: {string: string} = {}
+local function check(config, included, formatter)
+   local modules = {}
 
-   -- Doing it ahead should save us time since less lookups?
-   -- I'll just lean into watch to save time (like Cyans incremental builds)
+
+
    if config.include_dir then
       for i = 1, #config.include_dir do
          local path = config.include_dir[i]
@@ -121,7 +121,7 @@ local function check(config: TlConfig, included: {string}, formatter: Formatter)
 
    local env = setupEnv(config)
 
-   local reports: {common.Report} = {}
+   local reports = {}
 
    turbo(true)
 
@@ -151,7 +151,7 @@ local function check(config: TlConfig, included: {string}, formatter: Formatter)
       end
    end
 
-   if formatter == 'json' as Formatter then
+   if formatter == 'json' then
       io.write(json.encode(cleaned))
    else
       local res = formatter(cleaned)
@@ -162,7 +162,7 @@ local function check(config: TlConfig, included: {string}, formatter: Formatter)
    os.exit(fail and -1 or 0)
 end
 
-local function wholeProject(config: TlConfig, formatter: Formatter)
+local function wholeProject(config, formatter)
    local sourceDir = config.source_dir or ''
 
    if sourceDir:sub(#sourceDir, #sourceDir) ~= '/' and sourceDir ~= '' then
@@ -212,7 +212,7 @@ local function wholeProject(config: TlConfig, formatter: Formatter)
    check(config, included, formatter)
 end
 
-local function single(files: {string}, config: TlConfig, formatter: Formatter)
+local function single(files, config, formatter)
    check(config, files, formatter)
 end
 
@@ -228,40 +228,40 @@ local function main()
       color.disable()
    end
 
-   local formatter: Formatter
+   local formatter
 
    if args.display_style == 'full' and not args.quiet then
       formatter = formatters.full
-   elseif args.display_style == 'quiet' or args.quiet as boolean then
+   elseif args.display_style == 'quiet' or args.quiet then
       formatter = formatters.quiet
    else
-      formatter = 'json' as Formatter
+      formatter = 'json'
    end
 
-   local rules: {string: any} = {}
+   local rules = {}
 
-   if args.rules and fs.exists(args.rules as string) then
-      rules = util.require(args.rules as string) as {string: any} or {}
+   if args.rules and fs.exists(args.rules) then
+      rules = util.require(args.rules) or {}
    end
 
-   for i, v in pairs(rules as {string: any}) do
-      if (options as {string: any})[i] then
-         (options as {string: any})[i] = v
+   for i, v in pairs(rules) do
+      if (options)[i] then
+         (options)[i] = v
       end
    end
 
    local lints = rules.lints
 
-   if lints is {common.Rule} then -- can only use `is` on variables...
+   if type(lints) == "table" then
       for i = 1, #lints do
          table.insert(stage.rules, lints[i])
       end
    end
 
-   local config: TlConfig = {}
+   local config = {}
 
    if fs.exists('tlconfig.lua') then
-      config = util.require('tlconfig.lua') as TlConfig
+      config = util.require('tlconfig.lua')
    end
 
    stage.generateStrategy()
@@ -269,7 +269,7 @@ local function main()
    if args.command == 'check-all' then
       wholeProject(config, formatter)
    elseif args.command == 'check' then
-      single(args.file as {string}, config, formatter)
+      single(args.file, config, formatter)
    end
 end
 

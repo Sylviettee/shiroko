@@ -1,8 +1,8 @@
-local options = require 'shiroko.options'
-local common = require 'shiroko.common'
-local util = require 'shiroko.util'
+local _tl_compat; if (tonumber((_VERSION or ''):match('[%d.]*$')) or 0) < 5.3 then local p, m = pcall(require, 'compat53.module'); if p then _tl_compat = m end end; local string = _tl_compat and _tl_compat.string or string; local table = _tl_compat and _tl_compat.table or table; local options = require('shiroko.options')
+local common = require('shiroko.common')
+local util = require('shiroko.util')
 
-local function checkLine(line: string, lineNum: integer): {common.Report}
+local function checkLine(line, lineNum)
    local rets = {}
 
    if #line > options.lineLength then
@@ -18,7 +18,7 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
    end
 
    do
-      local indent, stop = line:match('^(%s*)()') as (string, integer)
+      local indent, stop = line:match('^(%s*)()')
 
       local char = indent:sub(1, 1)
       local opp = char == ' ' and '\t' or ' '
@@ -33,13 +33,13 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
          columnStop = stop,
          lineStop = lineNum,
          code = indent:gsub(
-            indentation == ' ' and '\t' or string.rep(' ', options.indentationSize),
-            indentation == ' ' and string.rep(' ', options.indentationSize) or '\t'
-         )
+         indentation == ' ' and '\t' or string.rep(' ', options.indentationSize),
+         indentation == ' ' and string.rep(' ', options.indentationSize) or '\t'),
+
       }
 
       if indentation == '\t' then
-         fix.code = fix.code:gsub(' ', '') -- Cleanup
+         fix.code = fix.code:gsub(' ', '')
       end
 
       if indent:find(opp, 1, true) then
@@ -52,8 +52,8 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
             columnStop = stop,
             lineStop = lineNum,
             fixes = {
-               fix
-            }
+               fix,
+            },
          })
       end
 
@@ -67,13 +67,13 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
             columnStop = stop,
             lineStop = lineNum,
             fixes = {
-               fix
-            }
+               fix,
+            },
          })
       end
    end
 
-   local start, stop = line:match('^()%s+()$') as (integer, integer)
+   local start, stop = line:match('^()%s+()$')
 
    if start and stop then
       table.insert(rets, {
@@ -90,14 +90,14 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
                line = lineNum,
                columnStop = stop,
                lineStop = lineNum,
-               code = ''
-            }
-         }
+               code = '',
+            },
+         },
       })
 
       return rets
    else
-      start, stop = line:match('^.-()%s+()$') as (integer, integer)
+      start, stop = line:match('^.-()%s+()$')
    end
 
    if start and stop then
@@ -115,21 +115,21 @@ local function checkLine(line: string, lineNum: integer): {common.Report}
                line = lineNum,
                columnStop = stop,
                lineStop = lineNum,
-               code = line:sub(0, start - 1)
-            }
-         }
+               code = line:sub(0, start - 1),
+            },
+         },
       })
    end
 
    return rets
 end
 
-local function main(_node: common.Node, contents: string): {common.Report}
+local function main(_node, contents)
    local reports2d = util.walkLines(contents, checkLine)
    return util.flatten(reports2d)
 end
 
-return util.rule {
+return util.rule({
    ruleset = 'recommended',
-   lintProgram = main
-}
+   lintProgram = main,
+})
