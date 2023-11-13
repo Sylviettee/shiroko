@@ -7,9 +7,8 @@ local common = require('shiroko.common')
 local stage = require('shiroko.stage')
 local color = require('shiroko.color')
 local util = require('shiroko.util')
+local glob = require('shiroko.glob')
 local fs = require('shiroko.fs')
-
-local glob = require('posix.glob').glob
 local json = require('dkjson')
 local tl = require('tl')
 
@@ -102,6 +101,8 @@ local function setupEnv(config)
    return env
 end
 
+
+
 local function check(config, included, formatter)
    local modules = {}
 
@@ -180,7 +181,7 @@ local function wholeProject(config, formatter)
 
       if config.include then
          for i = 1, #config.include do
-            local files = glob(sourceDir .. config.include[i], 0)
+            local files = glob(included, sourceDir .. config.include[i])
 
             for k = 1, #files do
                globed[files[k]] = true
@@ -196,7 +197,7 @@ local function wholeProject(config, formatter)
 
       if config.exclude then
          for i = 1, #config.exclude do
-            local files = glob(sourceDir .. config.exclude[i], 0)
+            local files = glob(included, sourceDir .. config.exclude[i])
 
             for k = 1, #files do
                globed[files[k]] = nil
