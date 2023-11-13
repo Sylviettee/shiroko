@@ -101,8 +101,6 @@ local function setupEnv(config)
    return env
 end
 
-
-
 local function check(config, included, formatter)
    local modules = {}
 
